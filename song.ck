@@ -1,6 +1,3 @@
-
-
-
   2::second => dur half;
   2*half => dur whole;
   
@@ -18,28 +15,31 @@
 
 
   fun void loop(){ 
-   SinOsc a2 => JCRev rev => dac;
+   SinOsc a2 => JCRev rev => Pan2 pan => dac;
     0 => int i;
     0.005 => a2.gain;
     0 => int counter;
     [ 0, 2, 4, 7, 9, 16, 12, 11, 4, 2, 7] @=> int arr[];
     
-    while (i<=100) {
+    while (i<100) {
         Math.mtof(60+arr[i%11])=>a2.freq; 
+        Math.random2f(-1.0,1.0) => pan.pan;
         0.25::second=>now;
         i++;
     }  
 }
 
+fun void panloop() {
+
+    
+}
+
 spork ~ loop();
 spork ~ melody();
-4*whole=>now;
+2*whole=>now;
 
-half => now;
-
-spork ~ loop();
 spork ~ melody();
-4*whole=>now;
+2*whole=>now;
 
 
 
