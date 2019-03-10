@@ -1,18 +1,48 @@
-  2::second => dur half;
+ 2::second => dur half;
  2*half => dur whole;
  half/2 => dur quarter;
+ float fundfreq;
+ float upfreq;
+ float downfreq;
+ 
  
  
   fun void melody() {
-      SinOsc melody => Chorus blah => dac;
-      220*2 => melody.freq;
-      0.1 => melody.gain;
-      half => now;
-      196*2 => melody.freq;
-      half => now;
-      174.61*2 => melody.freq;
-      whole =>now;
+      SinOsc fund => dac;
+      SinOsc down => dac;
+      SinOsc up => dac;
+      
+      220*2 => fundfreq; 
+      
+      chorusModule(fundfreq, upfreq, downfreq);
+      //make one module to tune up and another to tune down
+      //chuck the functions to the freq variables so that
+      //the function returns properly
+      
+      upfreq => up.freq;
+      fundfreq => fund.freq;
+      downfreq => down.freq;
+      
+      0.1 => up.gain;
+      0.1 => fund.gain;
+      0.1 => down.gain;
+      <<< fundfreq >>>;
+      <<< upfreq >>>;
+      <<< downfreq >>>;
+      
+      half => now; 
+      
+      
           
+ }
+ 
+ fun float chorusModule(float fundfreq, float upfreq, float downfreq) {
+     fundfreq + 5.0 => upfreq;
+     fundfreq - 5.0 => downfreq;
+     return fundfreq;
+     return upfreq;
+     return downfreq;
+     
  }
 
 
@@ -55,10 +85,4 @@ spork ~ melody();
 spork ~ melody();
 spork ~ loop();
 2*whole=>now;
-
-
-
-
-
-
 
