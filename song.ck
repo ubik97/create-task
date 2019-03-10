@@ -2,6 +2,7 @@
  2*half => dur whole;
  half/2 => dur quarter;
  
+ 
   fun void melody() {
       SinOsc melody => Chorus blah => dac;
       220*2 => melody.freq;
@@ -24,7 +25,6 @@
     
     while (i<100) {
         Math.mtof(60+melodyArr[i%11]) => a2.freq; 
-        Math.random2f(-1.0,1.0) => panvar.pan;
         
         
         if (x<1.0) {
@@ -48,6 +48,15 @@ spork ~ melody();
 
 spork ~ melody();
 2*whole=>now;
+
+spork ~ melody();
+2*whole=>now;
+
+spork ~ melody();
+spork ~ loop();
+2*whole=>now;
+
+
 
 
 
